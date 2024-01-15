@@ -12,5 +12,5 @@ async def wait_random(max_delay: int = 10) -> float:
     :return: The random delay.
     """
     rm_float = random.uniform(0, max_delay)
-    await asyncio.sleep(ram_float)
+    await asyncio.sleep(rm_float)
     return rm_float
