@@ -71,3 +71,19 @@ class TestGithubOrgClient(unittest.TestCase):
         """ unit-test for GithubOrgClient.has_license """
         result = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(result, expected)
+
+
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """integration tests for the GithubOrgClient class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """ Before each method"""
+        conf = {'return_value.json.side_effect':
+                [
+                    cls.org_payload, cls.repos_payload,
+                    cls.org_payload, cls.repos_payload
+                ]
+                }
+        cls.get_patcher = patch('requests.get', **conf)
+        cls.mock = cls.get_patcher.start()
