@@ -78,7 +78,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """ Before each method"""
+        """ each method"""
         conf = {'return_value.json.side_effect':
                 [
                     cls.org_payload, cls.repos_payload,
@@ -87,3 +87,22 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
                 }
         cls.get_patcher = patch('requests.get', **conf)
         cls.mock = cls.get_patcher.start()
+
+    def test_public_repos(self) -> None:
+        """Tests the public_repos """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(),
+            self.expected_repos,
+        )
+
+    def test_public_repos_with_license(self) -> None:
+        """Tests the public_repos """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(license="apache-2.0"),
+            self.apache2_repos,
+        )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Removes class fixtures after running all tests."""
+        cls.get_patcher.stop()
