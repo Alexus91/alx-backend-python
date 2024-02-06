@@ -2,10 +2,11 @@
 """A module for testing the client module.
 """
 import unittest
-from parameterized import parameterized
-from unittest.mock import patch, MagicMock, PropertyMock
+from parameterized import parameterized, parameterized_class
+from unittest.mock import patch, MagicMock, PropertyMock, Mock
 from typing import Dict
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
